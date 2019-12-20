@@ -21,16 +21,27 @@ RUN apt-get -y dist-upgrade -o Dpkg::Options::="--force-confold" && \
     apt-get -y install curl wget
 
 #Install JDK8
+# RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
+#     add-apt-repository ppa:webupd8team/java && \
+#     apt-get update && \
+#     apt-get install -y oracle-java8-installer && \
+#     apt-get install oracle-java8-set-default && \
+#     rm -rf /var/lib/apt/lists/* && \
+#     rm -rf /var/cache/oracle-jdk8-installer
+
 RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
     add-apt-repository ppa:webupd8team/java && \
     apt-get update && \
-    apt-get install -y oracle-java8-installer && \
-    apt-get install oracle-java8-set-default && \
+    apt-get install -y openjdk-8-jdk && \
+    apt-get install openjdk-8-jre && \
     rm -rf /var/lib/apt/lists/* && \
-    rm -rf /var/cache/oracle-jdk8-installer
+    rm -rf /var/cache/openjdk-*
+
 
 #Define commonly used JAVA_HOME variable
-ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
+#ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
+ENV JRE_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
 
 #Install Tomcat8
 RUN wget --quiet --no-cookies http://mirrors.shu.edu.cn/apache/tomcat/tomcat-8/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz -O /tmp/tomcat.tgz && \
