@@ -16,7 +16,7 @@ ENV LC_ALL pt_BR.UTF-8
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 #Install dependencies
-RUN apt-get -y dist-upgrade && \
+RUN apt-get -y dist-upgrade -o Dpkg::Options::="--force-confold" && \
     apt-get -y install software-properties-common && \
     apt-get -y install curl wget
 
